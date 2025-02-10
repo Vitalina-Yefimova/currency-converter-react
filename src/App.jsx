@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ConverterPage from './components/ConverterPage';
-import HomePage from './components/HomePage';
+import ConverterPage from './pages/ConverterPage';
+import HomePage from './pages/HomePage';
 
 export default function App() {
 

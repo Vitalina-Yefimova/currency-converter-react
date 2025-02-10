@@ -1,5 +1,4 @@
-import '../index.css'
-
+import { NavLink } from "react-router-dom";
 
 const SectionTemplate = ({
   sectionClass,
@@ -17,17 +16,22 @@ const SectionTemplate = ({
   return (
     <section
       className={sectionClass}
-      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: 'no-repeat' }} >
-      <div className="md:ml-[250px]">
+      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} >
+      <div className='mr-0'>
         <h1
           className={titleClass}>{title}
         </h1>
         <p
           className={subtitleClass}>{subtitle}
         </p>
-        <button
-          className={buttonClass}>{buttonText}
-        </button>
+        <NavLink
+          to="/converter"
+          >
+          <button
+            className={`${buttonClass} cursor-pointer`}>
+            {buttonText}
+            </button>
+        </NavLink>
       </div>
       <img
         className={imgClass}
