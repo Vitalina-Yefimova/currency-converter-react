@@ -16,27 +16,23 @@ const SectionTemplate = ({
   return (
     <section
       className={sectionClass}
-      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} >
-      <div className='mr-0'>
-        <h1
-          className={titleClass}>{title}
-        </h1>
-        <p
-          className={subtitleClass}>{subtitle}
-        </p>
-        <NavLink
-          to="/converter"
-          >
-          <button
-            className={`${buttonClass} cursor-pointer`}>
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="mr-0">
+        <h1 className={titleClass}>{title}</h1>
+        <p className={subtitleClass}>{subtitle}</p>
+        <NavLink to="/converter">
+          <button className={`${buttonClass} cursor-pointer`}>
             {buttonText}
-            </button>
+          </button>
         </NavLink>
       </div>
-      <img
-        className={imgClass}
-        src={imgSrc}
-        alt={imgAlt} />
+      <img className={imgClass} src={imgSrc} alt={imgAlt} />
     </section>
   );
 };

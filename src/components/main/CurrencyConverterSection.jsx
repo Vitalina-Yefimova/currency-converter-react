@@ -1,5 +1,5 @@
-import SectionTemplate from './SectionTemplate';
-import black_card from '../../assets/images/black_card.jpg';
+import SectionTemplate from "./SectionTemplate";
+import black_card from "../../assets/images/black_card.jpg";
 
 export default function CurrencyConverterSection() {
   return (
@@ -14,6 +14,6 @@ export default function CurrencyConverterSection() {
       buttonText="Конвертувати валюту"
       imgSrc={black_card}
       imgAlt="Black card in hand"
-      />
-  )
+    />
+  );
 }
