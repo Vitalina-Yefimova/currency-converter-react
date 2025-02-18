@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Button from "../shared/Button";
 
 const SectionTemplate = ({
   sectionClass,
@@ -27,9 +28,7 @@ const SectionTemplate = ({
         <h1 className={titleClass}>{title}</h1>
         <p className={subtitleClass}>{subtitle}</p>
         <NavLink to="/converter">
-          <button className={`${buttonClass} cursor-pointer`}>
-            {buttonText}
-          </button>
+          <Button className={buttonClass}>{buttonText}</Button>
         </NavLink>
       </div>
       <img className={imgClass} src={imgSrc} alt={imgAlt} />

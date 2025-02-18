@@ -1,30 +1,21 @@
 import { NavLink } from "react-router-dom";
+import IconChip from "../icons/IconChip";
 
-const Logo = ({ src, alt, title, isFooter = false }) => {
+const Logo = ({ title, isFooter = false }) => {
   return (
-    <div
-      className={`flex ${
-        isFooter
-          ? "items-center justify-center md:justify-start"
-          : "justify-center items-center lg:ml-[2vw]"
-      }`}
-    >
-      <img
+    <div className="flex items-center justify-center">
+      <IconChip
         className={
           isFooter
-            ? "w-[2.2vw] md:w-5"
-            : "mr-1 h-[2.3vw] lg:h-[1.2vw] lg:mr-[0.5vw]"
+            ? "w-[2.4vw] md:w-5 lg:mt-[0.2vw]"
+            : "h-[3.4vw] lg:h-[1.2vw] lg:ml-[1.5vw] lg:mt-[0.1vw]"
         }
-        src={src}
-        alt={alt}
       />
       {isFooter ? (
-        <span className="font-bold text-[2.6vw] ml-1 md:text-2xl md:ml-2">
-          {title}
-        </span>
+        <span className="font-bold text-[2.6vw] ml-1 lg:text-2xl">{title}</span>
       ) : (
         <NavLink
-          className="text-[#1F1E25] font-[WorkSans] text-[3.2vw] lg:text-[1.2vw] font-bold leading-normal"
+          className="text-[#1F1E25] font-[WorkSans] text-[3.2vw] md:text-[2vw] md:pl-1.5 lg:text-[1.3vw] lg:pl-0 font-bold leading-normal"
           to="/"
         >
           {title}

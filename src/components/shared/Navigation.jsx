@@ -7,7 +7,7 @@ const Navigation = ({ isFooter = false }) => {
         className={`flex ${
           isFooter
             ? "flex-col gap-0.5 lg:gap-[0.5vw] text-[2.5vw] md:text-[16px] lg:mt-0"
-            : "flex-col items-center pb-1 md:pt-0 md:flex-row md:gap-6 text-[2.5vw] md:text-[16px]"
+            : "flex-col items-center pb-1 md:pt-0 md:flex-row md:gap-4 text-[2.5vw] md:text-[16px] lg:text-[1.5vw]"
         }`}
       >
         <li>
@@ -25,7 +25,7 @@ const Navigation = ({ isFooter = false }) => {
         <li className="mr-0">
           <NavLink
             to="/converter"
-            className={`text-${isFooter ? "[#707c87]" : "[#2c36f2]"}`}
+            className={["text-[#707c87]", "text-[#2c36f2]"][isFooter ? 0 : 1]}
           >
             Конвертер валют
           </NavLink>

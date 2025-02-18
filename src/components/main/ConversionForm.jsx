@@ -1,127 +1,55 @@
-import { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useCurrencyStore from "../../store/useCurrencyStore";
-import Arrows from "../../assets/icons/arrows.svg";
-import CalendarIcon from "../../assets/icons/calendar.svg";
+import useConversionLogic from "../../hooks/useConversionLogic";
+import IconArrows from "../icons/IconArrows";
+import IconCalendar from "../icons/IconCalendar";
 import CurrencyInput from "./CurrencyInput";
-
-const schema = z.object({
-  amount: z
-    .string()
-    .regex(
-      /^\d*\.?\d{0,2}$/,
-      "Число має містити не більше 2 знаків після коми"
-    ),
-  convertedAmount: z
-    .string()
-    .regex(
-      /^\d*\.?\d{0,2}$/,
-      "Число має містити не більше 2 знаків після коми"
-    ),
-});
+import Button from "../shared/Button";
 
 const ConversionForm = () => {
-  const { exchangeRates, fetchExchangeRates, addToHistory } =
-    useCurrencyStore();
-  const { register, handleSubmit, setValue } = useForm({
-    resolver: zodResolver(schema),
-    mode: "onChange",
-  });
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    amount,
+    convertedAmount,
+    fromCurrency,
+    toCurrency,
+    date,
+    setFromCurrency,
+    setToCurrency,
+    exchangeRates,
+    handleInputChange,
+    handleDateChange,
+  } = useConversionLogic();
 
-  const [fromCurrency, setFromCurrency] = useState("UAH");
-  const [toCurrency, setToCurrency] = useState("USD");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-  const [amount, setAmount] = useState(1000);
-  const [convertedAmount, setConvertedAmount] = useState("");
-
-  const lastEditedField = useRef("amount");
-
-  useEffect(() => {
-    fetchExchangeRates(date);
-  }, [date, fetchExchangeRates]);
-
-  useEffect(() => {
-    if (exchangeRates[toCurrency] && exchangeRates[fromCurrency]) {
-      const rate = exchangeRates[fromCurrency] / exchangeRates[toCurrency];
-
-      if (lastEditedField.current === "amount") {
-        const result = (Number(amount) * rate).toFixed(2);
-        setConvertedAmount(result);
-        setValue("convertedAmount", result);
-      } else if (lastEditedField.current === "convertedAmount") {
-        const result = (Number(convertedAmount) / rate).toFixed(2);
-        setAmount(result);
-        setValue("amount", result);
-      }
-    }
-  }, [exchangeRates, amount, convertedAmount, fromCurrency, toCurrency]);
-
-  const handleAmountChange = (e) => {
-    lastEditedField.current = "amount";
-    setAmount(e.target.value);
-    setValue("amount", e.target.value);
-  };
-
-  const handleConvertedAmountChange = (e) => {
-    lastEditedField.current = "convertedAmount";
-    setConvertedAmount(e.target.value);
-    setValue("convertedAmount", e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    const selectedDate = e.target.value;
-    if (
-      new Date(selectedDate) >=
-      new Date(new Date().setDate(new Date().getDate() - 7))
-    ) {
-      setDate(selectedDate);
-      fetchExchangeRates(selectedDate);
-    }
-  };
-
-  const onSubmit = (data) => {
-    addToHistory({
-      date,
-      amount: data.amount,
-      from: fromCurrency,
-      to: toCurrency,
-      result: data.convertedAmount,
-    });
-  };
-
-  console.log("Передаём в CurrencyInput exchangeRates:", exchangeRates);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center bg-[#F6F7FF] p-10"
+      className="flex flex-col lg:justify-center bg-[#F6F7FF] p-10 lg:px-[15vw]"
     >
       <div className="flex flex-col bg-white p-6">
-        <h2 className="text-[#1F1E25] text-2xl font-bold mb-6">
+        <h2 className="text-[#1F1E25] text-[3vw] text-center lg:text-left lg:text-2xl font-bold pb-3 lg:mb-6">
           Конвертер валют
         </h2>
-
-        <div className="flex items-center text-[#707C87] gap-4 mb-4">
+        <div className="flex flex-col items-center lg:flex-row text-[#707C87] gap-1 md:gap-3 lg:items-start lg:gap-4 mb-4">
           <CurrencyInput
             value={amount}
-            onChange={handleAmountChange}
+            onChange={(e) => handleInputChange(e, "amount")}
             currency={fromCurrency}
             setCurrency={setFromCurrency}
             register={register("amount")}
             exchangeRates={exchangeRates}
           />
-          <img className="w-6" src={Arrows} alt="Arrows icon" />
+          <IconArrows className="w-2 md:w-5 lg:w-[5vw] lg:h-[2vw] lg:mt-[1vw] lg:mr-[0.5vw]" />
           <CurrencyInput
             value={convertedAmount}
-            onChange={handleConvertedAmountChange}
+            onChange={(e) => handleInputChange(e, "convertedAmount")}
             currency={toCurrency}
             setCurrency={setToCurrency}
             register={register("convertedAmount")}
             exchangeRates={exchangeRates}
           />
         </div>
-        <div className="flex justify-between text-[#707C87]">
+        <div className="flex flex-col lg:flex-row items-center lg:justify-between text-[#707C87] mt-2">
           <div className="relative mb-4">
             <input
               {...register("date")}
@@ -131,21 +59,19 @@ const ConversionForm = () => {
               value={date}
               onChange={handleDateChange}
             />
-            <div className="border p-3 px-2 rounded-lg flex items-center justify-between">
-              <span>{date}</span>
-              <img
-                src={CalendarIcon}
-                className="w-5 h-5 ml-5 cursor-pointer"
-                alt="Calendar icon"
-              />
+            <div className="border w-[40vw] h-[8vw] lg:p-3 lg:px-2 rounded-lg flex items-center justify-between lg:w-[18vw] lg:h-[4vw]">
+              <span className="text-[2.5vw] lg:text-[1.7vw] pl-[5vw] lg:pl-[1vw] lg:items-start">
+                {date}
+              </span>
+              <IconCalendar className="w-[5vw] h-[4vw] mr-1.5 cursor-pointer lg:w-[2vw]" />
             </div>
           </div>
-          <button
+          <Button
             type="submit"
-            className="bg-[#2C36F2] text-white px-4 rounded-lg cursor-pointer mb-4"
+            className="bg-[#2C36F2] text-white px-[2vw] py-[1.3vw] text-[3vw] lg:px-4 lg:py-[1vw] lg:rounded-[4px] lg:mb-5 lg:h-[4vw] lg:w-[17.6vw] lg:text-[1.5vw]"
           >
             Зберегти результат
-          </button>
+          </Button>
         </div>
       </div>
     </form>

@@ -15,3 +15,6 @@ md — экраны от 768px и больше.
 lg — экраны от 1024px и больше.
 xl — экраны от 1280px и больше.
 2xl — экраны от 1536px и больше.
+
+Сгеренировать SVG-компоненты:
+npx @svgr/cli src/assets/icons --out-dir src/components/icons

@@ -1,4 +1,4 @@
-import SelectVector from "../../assets/icons/select_vector.svg";
+import IconSelectVector from "../icons/IconSelectVector";
 
 const CurrencyInput = ({
   value,
@@ -9,17 +9,17 @@ const CurrencyInput = ({
   exchangeRates,
 }) => {
   return (
-    <div className="relative w-full flex gap-2">
+    <div className="relative w-[40vw] h-[7vw] md:h-[6.9vw] lg:w-full flex gap-2">
       <input
         {...register}
         type="number"
-        className="border p-3 w-full rounded-lg text-center"
+        className="border p-3 w-full lg:w-[18vw] lg:h-[4vw] rounded-lg text-center text-[2.5vw] lg:text-[1.8vw]"
         value={value}
         onChange={onChange}
       />
       <div className="relative">
         <select
-          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+          className="absolute top-0 left-0 lg:w-full lg:h-full opacity-0 cursor-pointer"
           value={currency}
           onChange={(e) => setCurrency(e.target.value)}
         >
@@ -30,13 +30,11 @@ const CurrencyInput = ({
               </option>
             ))}
         </select>
-        <div className="px-6 pl-3 py-3 border rounded-lg flex items-center cursor-pointer">
-          <span className="text-[#707C87] mr-2">{currency}</span>
-          <img
-            src={SelectVector}
-            className="w-4 h-4 pointer-events-none"
-            alt="Select Vector"
-          />
+        <div className="px-4 lg:px-6 pl-3 py-[1.7vw] mt-[0.1vw] md:py-[1.44vw] lg:py-3 border rounded-lg flex items-center cursor-pointer md:m-0 lg:w-[10vw] lg:h-[4vw] lg:pr-0">
+          <span className="text-[#707C87] text-[2.5vw] lg:text-[1.8vw] mr-2">
+            {currency}
+          </span>
+          <IconSelectVector className="w-[2vw] h-[2vw] lg:w-[30vw] pointer-events-none" />
         </div>
       </div>
     </div>
